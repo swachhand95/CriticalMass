@@ -45,11 +45,9 @@ public class TileAdapter extends BaseAdapter {
         if(convertView == null) {
             textView = new TextView(context);
             textView.setText("" + position);
-            textView.setLayoutParams(new GridView.LayoutParams(100, 100));
+            textView.setLayoutParams(new GridView.LayoutParams(85, 85));
  //           textView.setBackgroundResource(R.color.black);
-            textView.setTextSize(24.5f);
-            textView.setPadding(0, 8, 0, 8);
-
+//            textView.setPadding(8, 8, 8, 8);
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         } else {
