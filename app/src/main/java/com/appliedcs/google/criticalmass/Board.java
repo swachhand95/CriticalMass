@@ -18,6 +18,10 @@ public class Board {
         numCols = nCols;
 
         matrix = new Tile[numRows][numCols];
+
+        for (int i = 0; i < nRows; ++i)
+            for (int j = 0; j < nCols; ++j)
+                matrix[i][j] = new Tile(0, 0);
     }
 
     public static int getNumRows() {
@@ -84,5 +88,23 @@ public class Board {
             explodeNeighbors(x, y, player);
         }
 
+    }
+
+    public int getPlayer(int x, int y) {
+        return matrix[y][x].getPlayer();
+    }
+
+    public int getCount(int x, int y) {
+        return matrix[y][x].getCount();
+    }
+
+    public boolean isTileEmpty(int x, int y) {
+        if (x < 0 || y < 0 || x >= numCols || y >= numRows)
+            return false;
+        if (matrix[y][x] == null)
+            return true;
+        if (matrix[y][x].getCount() == 0)
+            return true;
+        return false;
     }
 }

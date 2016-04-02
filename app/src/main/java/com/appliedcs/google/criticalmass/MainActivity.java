@@ -10,10 +10,13 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int NUM_TILES = 48;
-    private int NUM_COLUMNS = 8;
+    private static final int NUM_COLUMNS = 8;
+    private static final int NUM_ROWS = 6;
+
+    private static final int DEFAULT_PLAYERS = 2;
 
     private int currentPlayerNumber = 0;
+    private int numPlayers = DEFAULT_PLAYERS;
 
     private TextView currentPlayerView;
     private GridView criticalGridView;
@@ -28,18 +31,27 @@ public class MainActivity extends AppCompatActivity {
         criticalGridView = (GridView) findViewById(R.id.criticalGridView);
         currentPlayerView = (TextView) findViewById(R.id.currentPlayerView);
 
-        criticalGridView.setNumColumns(NUM_COLUMNS);
-        criticalGridView.setAdapter(new TileAdapter(this, NUM_TILES));
-
         currentPlayerView.setText("" + (currentPlayerNumber + 1));
-        gameBoard = new Board(NUM_TILES / NUM_COLUMNS, NUM_COLUMNS);
+        gameBoard = new Board(NUM_ROWS, NUM_COLUMNS);
+
+        criticalGridView.setNumColumns(NUM_COLUMNS);
+        criticalGridView.setAdapter(new TileAdapter(this, NUM_ROWS, NUM_COLUMNS, gameBoard));
 
         criticalGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 int x = position % NUM_COLUMNS;
-                int y = position % NUM_TILES;
+                int y = position % NUM_ROWS;
+
+                if (gameBoard.isTileEmpty(x, y)) {
+                    gameBoard.explodeTile(x, y, currentPlayerNumber);
+                    currentPlayerNumber = (currentPlayerNumber + 1) % numPlayers;
+                }
+                else if (gameBoard.getPlayer(x, y) == currentPlayerNumber) {
+                    gameBoard.explodeTile(x, y, currentPlayerNumber);
+                    currentPlayerNumber = (currentPlayerNumber + 1) % numPlayers;
+                }
 
                 Toast.makeText(MainActivity.this, position + " clicked", Toast.LENGTH_SHORT).show();
             }
