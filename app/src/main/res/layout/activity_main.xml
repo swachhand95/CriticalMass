@@ -9,8 +9,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.appliedcs.google.criticalmass.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:orientation="horizontal"
+        android:id="@+id/playerLayout"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Player: " />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/currentPlayerNumber"/>
+
+    </LinearLayout>
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:numColumns="8"
+        android:id="@+id/criticalGridView"
+        android:layout_below="@+id/playerLayout" />
+
 </RelativeLayout>
