@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Sandesh on 02-04-2016.
@@ -21,6 +23,7 @@ public class TileAdapter extends BaseAdapter {
     private int numRows;
     private int numCols;
     private Board gameBoard;
+    private ArrayList<TextView> list;
 
     public TileAdapter(Context context, int numRows, int numCols, Board gameBoard) {
         this.context = context;
@@ -28,6 +31,10 @@ public class TileAdapter extends BaseAdapter {
         this.numCols = numCols;
         this.numTiles = numCols * numRows;
         this.gameBoard = gameBoard;
+        this.list = new ArrayList<>();
+
+        for (int i = 0; i < numTiles; ++i)
+            list.add(new TextView(context));
     }
 
     @Override
@@ -37,7 +44,7 @@ public class TileAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return list.get(position);
     }
 
     @Override
@@ -50,30 +57,18 @@ public class TileAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView textView;
         if(convertView == null) {
-            textView = new TextView(context);
+            textView = list.get(position);
 
             int x = position % numCols;
-            int y = position % numRows;
+            int y = position / numCols;
 
-            Log.d("HELLO", x + " " + y);
+            // Log.d("HELLO", x + " " + y);
 
-            int count = gameBoard.getCount(x, y);
-            int player = gameBoard.getPlayer(x, y);
-
-            if (count == 0) {
-                textView.setText("0");
-            }
-            else {
-                textView.setText("" + count);
-                if (player == 0)
-                    textView.setTextColor(parent.getResources().getColor(R.color.green));
-                else if (player == 1)
-                    textView.setTextColor(parent.getResources().getColor(R.color.blue));
-            }
+            textView.setText("0");
+            textView.setTextColor(parent.getResources().getColor(R.color.black));
 
             textView.setLayoutParams(new GridView.LayoutParams(100, 100));
             textView.setTextSize(24.5f);
-            // textView.setBackgroundResource(R.color.black);
             textView.setPadding(0, 8, 0, 8);
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
@@ -82,4 +77,7 @@ public class TileAdapter extends BaseAdapter {
         }
         return textView;
     }
+
+
+
 }
