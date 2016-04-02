@@ -25,6 +25,10 @@ public class Tile {
         count = c;
     }
 
+    public void incCount() {
+        count++;
+    }
+
     public void setPlayer(int p) {
         player = p;
     }
