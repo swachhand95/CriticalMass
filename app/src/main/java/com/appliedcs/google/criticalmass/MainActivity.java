@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView currentPlayerView;
     private GridView criticalGridView;
 
+    private Board gameBoard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         criticalGridView.setNumColumns(NUM_COLUMNS);
         criticalGridView.setAdapter(new TileAdapter(this, NUM_TILES));
 
-        currentPlayerView.setText("" + (currentPlayerNumber+1));
+        currentPlayerView.setText("" + (currentPlayerNumber + 1));
+        gameBoard = new Board(NUM_TILES / NUM_COLUMNS, NUM_COLUMNS);
 
         criticalGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
