@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView currentPlayerView;
     private GridView criticalGridView;
+    private Button resetButton;
 
     private Board gameBoard;
     private boolean[] playerOutOfGame = new boolean[numPlayers];
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         criticalGridView = (GridView) findViewById(R.id.criticalGridView);
         currentPlayerView = (TextView) findViewById(R.id.currentPlayerView);
+        resetButton = (Button) findViewById(R.id.resetButton);
 
         currentPlayerView.setText("" + (currentPlayerNumber + 1));
         gameBoard = new Board(NUM_ROWS, NUM_COLUMNS, numPlayers);
