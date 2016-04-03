@@ -1,7 +1,7 @@
 package com.appliedcs.google.criticalmass;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -11,9 +11,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.annotation.Target;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
     private static final int NUM_COLUMNS = 6;
     private static final int NUM_ROWS = 8;
@@ -32,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private int playersInGame = numPlayers;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         resetButton = (Button) findViewById(R.id.resetButton);
 
         currentPlayerView.setText("" + (currentPlayerNumber + 1));
+        currentPlayerView.setTextColor(getResources().getColor(R.color.green));
         gameBoard = new Board(NUM_ROWS, NUM_COLUMNS, numPlayers);
 
         criticalGridView.setNumColumns(NUM_COLUMNS);
@@ -48,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
         final TileAdapter tileAdapter = new TileAdapter(this, NUM_ROWS, NUM_COLUMNS, gameBoard);
         criticalGridView.setAdapter(tileAdapter);
 
-        criticalGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        criticalGridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
 
                 Log.d("HELLO3", currentPlayerNumber + "");
 
@@ -64,49 +67,60 @@ public class MainActivity extends AppCompatActivity {
 
                 int winner = 0;
 
-                if (gameBoard.isPlayerLost(currentPlayerNumber)) {
+                if (gameBoard.isPlayerLost(currentPlayerNumber))
+                {
                     playerOutOfGame[currentPlayerNumber] = true;
                     playersInGame--;
                     Toast.makeText(MainActivity.this, "Player " + (currentPlayerNumber + 1) + " lost", Toast.LENGTH_SHORT).show();
 
-                    if (playersInGame == 1) {
-                        for (int i = 0; i < playerOutOfGame.length; ++i) {
-                            if (!playerOutOfGame[i]) {
+                    if (playersInGame == 1)
+                    {
+                        for (int i = 0; i < playerOutOfGame.length; ++i)
+                        {
+                            if (!playerOutOfGame[i])
+                            {
                                 winner = i;
                                 break;
                             }
                         }
-
-                        Toast.makeText(MainActivity.this, "Player " + winner + " Wins!!", Toast.LENGTH_SHORT).show();
+                        currentPlayerView.setText("" + (winner + 1) + " Wins!!");
+                        currentPlayerView.setTextColor(getResources().getColor(winner == 0 ? R.color.green : R.color.blue));
+                        Toast.makeText(MainActivity.this, "Player " + (winner + 1) + " Wins!!", Toast.LENGTH_SHORT).show();
                     }
 
                     return;
                 }
 
-                if (gameBoard.isTileEmpty(x, y)) {
+                if (gameBoard.isTileEmpty(x, y))
+                {
                     gameBoard.explodeTile(x, y, currentPlayerNumber);
-                    do {
+                    do
+                    {
                         currentPlayerNumber = (currentPlayerNumber + 1) % numPlayers;
                     } while (playerOutOfGame[currentPlayerNumber]);
-                }
-                else if (gameBoard.getPlayer(x, y) == currentPlayerNumber) {
+                } else if (gameBoard.getPlayer(x, y) == currentPlayerNumber)
+                {
                     gameBoard.explodeTile(x, y, currentPlayerNumber);
-                    do {
+                    do
+                    {
                         currentPlayerNumber = (currentPlayerNumber + 1) % numPlayers;
                     } while (playerOutOfGame[currentPlayerNumber]);
                 }
 
                 String str = "";
-                for (int i = 0; i < NUM_ROWS; ++i) {
+                for (int i = 0; i < NUM_ROWS; ++i)
+                {
                     String row = "";
-                    for (int j = 0; j < NUM_COLUMNS; ++j) {
+                    for (int j = 0; j < NUM_COLUMNS; ++j)
+                    {
                         row += ("(" + gameBoard.getPlayer(j, i) + "," + gameBoard.getCount(j, i) + ") ");
                     }
                     str += (row + "\n");
                 }
                 // Log.d("HELLO1", str);
 
-                for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; ++i) {
+                for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; ++i)
+                {
                     TextView textView = (TextView) tileAdapter.getItem(i);
                     int p = i % NUM_COLUMNS;
                     int q = i / NUM_COLUMNS;
@@ -114,11 +128,12 @@ public class MainActivity extends AppCompatActivity {
                     int count = gameBoard.getCount(p, q);
                     int player = gameBoard.getPlayer(p, q);
 
-                    if (count == 0) {
+                    if (count == 0)
+                    {
                         textView.setText("0");
                         textView.setTextColor(parent.getResources().getColor(R.color.black));
-                    }
-                    else {
+                    } else
+                    {
                         textView.setText("" + count);
                         if (player == 0)
                             textView.setTextColor(parent.getResources().getColor(R.color.green));
@@ -127,26 +142,33 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
+                currentPlayerView.setText("" + (currentPlayerNumber + 1));
+                currentPlayerView.setTextColor(getResources().getColor(currentPlayerNumber == 0 ? R.color.green : R.color.blue));
+
 //                Toast.makeText(MainActivity.this, position + " clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
-        resetButton.setOnClickListener(new View.OnClickListener() {
-                                           @Override
-                                           public void onClick(View v) {
+        resetButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
 
-                                               gameBoard = new Board(NUM_ROWS,NUM_COLUMNS,numPlayers);
-                                               playerOutOfGame = new boolean[numPlayers];
-                                               currentPlayerNumber = 0;
+                gameBoard = new Board(NUM_ROWS, NUM_COLUMNS, numPlayers);
+                playerOutOfGame = new boolean[numPlayers];
+                currentPlayerNumber = 0;
+                playersInGame = numPlayers;
+                currentPlayerView.setText("" + (currentPlayerNumber + 1));
+                currentPlayerView.setTextColor(getResources().getColor(R.color.green));
 
-                                               for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; ++i) {
-                                                   TextView textView = (TextView) tileAdapter.getItem(i);
-                                                   textView.setText("0");
-                                                   textView.setTextColor(getResources().getColor(R.color.black));
-                                               }
-                                           }
-                                       }
-
-        );
+                for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; ++i)
+                {
+                    TextView textView = (TextView) tileAdapter.getItem(i);
+                    textView.setText("0");
+                    textView.setTextColor(getResources().getColor(R.color.black));
+                }
+            }
+        });
     }
 }

@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -70,7 +71,7 @@ public class TileAdapter extends BaseAdapter {
             textView.setLayoutParams(new GridView.LayoutParams(100, 100));
             textView.setTextSize(24.5f);
             textView.setPadding(0, 8, 0, 8);
-            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textView.setGravity(Gravity.CENTER);
 
         } else {
             textView = (TextView) convertView;
