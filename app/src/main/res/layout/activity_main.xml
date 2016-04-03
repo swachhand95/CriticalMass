@@ -43,7 +43,11 @@
         android:layout_alignParentBottom="true"
         android:numColumns="8"
         android:id="@+id/criticalGridView"
-        android:layout_below="@id/playerLayout" />
+        android:layout_below="@id/playerLayout"
+        android:stretchMode="columnWidth"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:padding="5dp"/>
 
 
 

@@ -3,6 +3,7 @@ package com.appliedcs.google.criticalmass;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,8 +15,8 @@ import java.lang.annotation.Target;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int NUM_COLUMNS = 8;
-    private static final int NUM_ROWS = 6;
+    private static final int NUM_COLUMNS = 6;
+    private static final int NUM_ROWS = 8;
 
     private static final int DEFAULT_PLAYERS = 2;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         gameBoard = new Board(NUM_ROWS, NUM_COLUMNS, numPlayers);
 
         criticalGridView.setNumColumns(NUM_COLUMNS);
+        criticalGridView.setGravity(Gravity.CENTER);
         final TileAdapter tileAdapter = new TileAdapter(this, NUM_ROWS, NUM_COLUMNS, gameBoard);
         criticalGridView.setAdapter(tileAdapter);
 
@@ -125,8 +127,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                Toast.makeText(MainActivity.this, position + " clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, position + " clicked", Toast.LENGTH_SHORT).show();
             }
         });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View v) {
+
+                                               gameBoard = new Board(NUM_ROWS,NUM_COLUMNS,numPlayers);
+                                               playerOutOfGame = new boolean[numPlayers];
+                                               currentPlayerNumber = 0;
+
+                                               for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; ++i) {
+                                                   TextView textView = (TextView) tileAdapter.getItem(i);
+                                                   textView.setText("0");
+                                                   textView.setTextColor(getResources().getColor(R.color.black));
+                                               }
+                                           }
+                                       }
+
+        );
     }
 }
