@@ -66,7 +66,7 @@ public class TileAdapter extends BaseAdapter {
             // Log.d("HELLO", x + " " + y);
 
             textView.setText("0");
-            textView.setTextColor(parent.getResources().getColor(R.color.black));
+            textView.setTextColor(parent.getResources().getColor(R.color.grey));
 
             textView.setLayoutParams(new GridView.LayoutParams(100, 100));
             textView.setTextSize(24.5f);

@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
     private int numPlayers = DEFAULT_PLAYERS;
 
     private TextView currentPlayerView;
+    private TextView playerLabel;
     private GridView criticalGridView;
     private Button resetButton;
 
@@ -39,9 +40,11 @@ public class MainActivity extends AppCompatActivity
         criticalGridView = (GridView) findViewById(R.id.criticalGridView);
         currentPlayerView = (TextView) findViewById(R.id.currentPlayerView);
         resetButton = (Button) findViewById(R.id.resetButton);
+        playerLabel = (TextView) findViewById(R.id.playerLabel);
 
         currentPlayerView.setText("" + (currentPlayerNumber + 1));
         currentPlayerView.setTextColor(getResources().getColor(R.color.green));
+        playerLabel.setTextColor(getResources().getColor(R.color.green));
         gameBoard = new Board(NUM_ROWS, NUM_COLUMNS, numPlayers);
 
         criticalGridView.setNumColumns(NUM_COLUMNS);
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity
                         }
                         currentPlayerView.setText("" + (winner + 1) + " Wins!!");
                         currentPlayerView.setTextColor(getResources().getColor(winner == 0 ? R.color.green : R.color.blue));
+                        playerLabel.setTextColor(getResources().getColor(winner == 0 ? R.color.green : R.color.blue));
                         Toast.makeText(MainActivity.this, "Player " + (winner + 1) + " Wins!!", Toast.LENGTH_SHORT).show();
                     }
 
@@ -131,7 +135,7 @@ public class MainActivity extends AppCompatActivity
                     if (count == 0)
                     {
                         textView.setText("0");
-                        textView.setTextColor(parent.getResources().getColor(R.color.black));
+                        textView.setTextColor(parent.getResources().getColor(R.color.grey));
                     } else
                     {
                         textView.setText("" + count);
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity
 
                 currentPlayerView.setText("" + (currentPlayerNumber + 1));
                 currentPlayerView.setTextColor(getResources().getColor(currentPlayerNumber == 0 ? R.color.green : R.color.blue));
+                playerLabel.setTextColor(getResources().getColor(currentPlayerNumber == 0 ? R.color.green : R.color.blue));
 
 //                Toast.makeText(MainActivity.this, position + " clicked", Toast.LENGTH_SHORT).show();
             }
@@ -161,12 +166,13 @@ public class MainActivity extends AppCompatActivity
                 playersInGame = numPlayers;
                 currentPlayerView.setText("" + (currentPlayerNumber + 1));
                 currentPlayerView.setTextColor(getResources().getColor(R.color.green));
+                playerLabel.setTextColor(getResources().getColor(R.color.green));
 
                 for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; ++i)
                 {
                     TextView textView = (TextView) tileAdapter.getItem(i);
                     textView.setText("0");
-                    textView.setTextColor(getResources().getColor(R.color.black));
+                    textView.setTextColor(getResources().getColor(R.color.grey));
                 }
             }
         });
